@@ -1,0 +1,18 @@
+﻿@using DynamicAppSettings.Data
+
+<table>
+@{
+    <tr>
+        <th>Key</th>
+        <th>Value</th>
+    </tr>
+
+    foreach (var keyValuePair in ViewBag.Result)
+    {
+        <tr>
+            <td>@keyValuePair.Key</td>
+            <td>@keyValuePair.Value</td>
+        </tr>   
+    }
+}
+</table>
