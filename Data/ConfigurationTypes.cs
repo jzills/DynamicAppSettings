@@ -4,6 +4,7 @@ namespace DynamicAppSettings.Data
     {
         IConfiguration,
         SmtpOptions,
-        ApiOptions
+        ApiOptions,
+        ApiOtherOptions
     }
 }

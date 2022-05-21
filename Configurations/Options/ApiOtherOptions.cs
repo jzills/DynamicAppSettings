@@ -1,6 +1,6 @@
 namespace DynamicAppSettings.Configurations;
 
-public class ApiOptions
+public class ApiOtherOptions
 {
     public string BaseUrl { get; set; }
     public AuthenticationOptions Authentication { get; set; }

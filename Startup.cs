@@ -26,6 +26,7 @@ namespace DynamicAppSettings
             services.AddOptions();
             services.Configure<SmtpOptions>(Configuration.GetSection("Smtp"));
             services.Configure<ApiOptions>(Configuration.GetSection("Api"));
+            services.Configure<ApiOtherOptions>(Configuration.GetSection("ApiOther"));
 
             services.AddControllersWithViews();
         }
