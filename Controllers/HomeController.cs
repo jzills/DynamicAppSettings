@@ -6,41 +6,40 @@ using DynamicAppSettings.Extensions;
 using DynamicAppSettings.Data;
 using System.Linq;
 
-namespace DynamicAppSettings.Controllers
+namespace DynamicAppSettings.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly IConfiguration _configuration;
+    private readonly IOptions<SmtpOptions> _smtpOptions;
+    private readonly IOptions<ApiOptions> _apiOptions;
+    private readonly IOptions<ApiOtherOptions> _apiOtherOptions;
+
+    public HomeController(
+        IConfiguration configuration,
+        IOptions<SmtpOptions> smtpOptions,
+        IOptions<ApiOptions> apiOptions,
+        IOptions<ApiOtherOptions> apiOtherOptions
+    )
     {
-        private readonly IConfiguration _configuration;
-        private readonly IOptions<SmtpOptions> _smtpOptions;
-        private readonly IOptions<ApiOptions> _apiOptions;
-        private readonly IOptions<ApiOtherOptions> _apiOtherOptions;
+        _configuration = configuration;
+        _smtpOptions = smtpOptions;
+        _apiOptions = apiOptions;
+        _apiOtherOptions = apiOtherOptions;
+    }
 
-        public HomeController(
-            IConfiguration configuration,
-            IOptions<SmtpOptions> smtpOptions,
-            IOptions<ApiOptions> apiOptions,
-            IOptions<ApiOtherOptions> apiOtherOptions
-        )
+    public IActionResult Index(ConfigurationTypes type)
+    {
+
+        ViewBag.Result = type switch
         {
-            _configuration = configuration;
-            _smtpOptions = smtpOptions;   
-            _apiOptions = apiOptions;
-            _apiOtherOptions = apiOtherOptions;
-        }
+            ConfigurationTypes.IConfiguration => _configuration.AsEnumerable(),
+            ConfigurationTypes.SmtpOptions => _smtpOptions.AsEnumerable(),
+            ConfigurationTypes.ApiOptions => _apiOptions.AsEnumerable(),
+            ConfigurationTypes.ApiOtherOptions => _apiOtherOptions.AsEnumerable(),
+            _ => null
+        };
 
-        public IActionResult Index(ConfigurationTypes type)
-        {
-            
-            ViewBag.Result = type switch
-            {
-                ConfigurationTypes.IConfiguration   => _configuration.AsEnumerable(),
-                ConfigurationTypes.SmtpOptions      => _smtpOptions.AsEnumerable(),
-                ConfigurationTypes.ApiOptions       => _apiOptions.AsEnumerable(),
-                ConfigurationTypes.ApiOtherOptions  => _apiOtherOptions.AsEnumerable(),
-                _                                   => null
-            };
-
-            return View();
-        }
+        return View();
     }
 }

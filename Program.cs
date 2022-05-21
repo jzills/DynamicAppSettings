@@ -1,27 +1,38 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 using DynamicAppSettings.Configurations;
+using DynamicAppSettings.Data;
+using DynamicAppSettings.Extensions;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace DynamicAppSettings
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddApplicationConfiguration();
+
+builder.Services.AddDbContext<ApplicationDbContext>(options => {
+    options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("DbConnection"));
+});
+
+builder.Services.AddOptions();
+builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
+builder.Services.Configure<ApiOptions>(builder.Configuration.GetSection("Api"));
+builder.Services.Configure<ApiOtherOptions>(builder.Configuration.GetSection("ApiOther"));
+
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+app.UseDeveloperExceptionPage();
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+app.UseEndpoints(endpoints =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args)
-                .ConfigureAppConfiguration((context, configuration) => 
-                {
-                    configuration.Add(new ApplicationConfigurationSource(configuration.Build()));
-                })
-                .Build()
-                .Run();
-        }
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
-}
+app.Run();
