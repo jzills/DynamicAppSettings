@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using DynamicAppSettings.Data;
+using DynamicAppSettings.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -23,24 +25,34 @@ namespace DynamicAppSettings.Configurations
             ConfigureOptionsWithJsonValues(context.AppSettings.Where(appSetting => appSetting.IsJsonValue));
         }
 
-        private void ConfigureOptions(IQueryable<AppSetting> dbSet)
+        private void ConfigureOptions(IQueryable<AppSetting> appSettings)
         {
-            foreach (var appSetting in dbSet)
+            foreach (var appSetting in appSettings)
                 Data.Add(appSetting.Key, appSetting.Value);
         }
 
-        private void ConfigureOptionsWithJsonValues(IQueryable<AppSetting> dbSet)
+        private void ConfigureOptionsWithJsonValues(IQueryable<AppSetting> appSettings)
         {
-            var appSettings = dbSet.ToDictionary(
-                setting => setting.Key, 
-                setting => JsonSerializer.Deserialize<Dictionary<string, object>>(setting.Value)
-            );
-
-            foreach (var key in appSettings.Keys)
-                foreach (var keyValuePair in appSettings[key])
-                    Data.Add($"{key}:{keyValuePair.Key}", $"{keyValuePair.Value}");
+            foreach (var appSetting in appSettings)
+                BuildAppSettingsFromJsonValue(appSetting.Key, appSetting.Value);
         }
 
+        private void BuildAppSettingsFromJsonValue(string key, string jsonValue)
+        {
+            if (jsonValue.TryGetJsonObject(out var deserializedJson))
+            {
+                foreach (var _key in deserializedJson.Keys)
+                {
+                    var serializedJson = JsonSerializer.Serialize(deserializedJson[_key]);
+                    if (serializedJson.TryGetJsonObject(out Dictionary<string, object> _))
+                        BuildAppSettingsFromJsonValue($"{key}:{_key}", serializedJson);
+                    else
+                        Data.Add($"{key}:{_key}", deserializedJson[_key].ToString());
+                }
+            }
+            else throw new FormatException("The specified JSON is invalid.");
+        }
+	
         private DbContextOptions<ApplicationDbContext> GetDbContextOptions() =>
             new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(Configuration["DbConnection"])
