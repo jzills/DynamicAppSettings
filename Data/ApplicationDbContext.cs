@@ -16,7 +16,30 @@ namespace DynamicAppSettings.Data
                 .Entity<AppSetting>()
                 .HasData(new AppSetting[] 
                 {
-                    new AppSetting { Id = Guid.NewGuid(), Key = "Smtp", Value = "{\"Host\": \"some@domain.com\",\"Port\": 25, \"EnableSSL\": true}"}
+                    new AppSetting 
+                    { 
+                        Key = "Smtp", 
+                        Value = "{\"Host\": \"some@domain.com\",\"Port\": 25, \"EnableSSL\": true}",
+                        IsJsonValue = true
+                    },
+                    new AppSetting 
+                    { 
+                        Key = "Api:BaseUrl", 
+                        Value = "www.someapi.com/api",
+                        IsJsonValue = false
+                    },
+                    new AppSetting 
+                    { 
+                        Key = "Api:Authentication:Key", 
+                        Value = Guid.NewGuid().ToString(),
+                        IsJsonValue = false
+                    },
+                    new AppSetting 
+                    { 
+                        Key = "Api:Authentication:Secret", 
+                        Value = Guid.NewGuid().ToString(),
+                        IsJsonValue = false
+                    }
                 });
         }
     }

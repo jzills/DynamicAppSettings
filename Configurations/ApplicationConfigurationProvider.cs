@@ -19,7 +19,19 @@ namespace DynamicAppSettings.Configurations
             using var context = new ApplicationDbContext(GetDbContextOptions());
             context.Database.EnsureCreated();
 
-            var appSettings = context.AppSettings.ToDictionary(
+            ConfigureOptions(context.AppSettings.Where(appSetting => !appSetting.IsJsonValue));
+            ConfigureOptionsWithJsonValues(context.AppSettings.Where(appSetting => appSetting.IsJsonValue));
+        }
+
+        private void ConfigureOptions(IQueryable<AppSetting> dbSet)
+        {
+            foreach (var appSetting in dbSet)
+                Data.Add(appSetting.Key, appSetting.Value);
+        }
+
+        private void ConfigureOptionsWithJsonValues(IQueryable<AppSetting> dbSet)
+        {
+            var appSettings = dbSet.ToDictionary(
                 setting => setting.Key, 
                 setting => JsonSerializer.Deserialize<Dictionary<string, object>>(setting.Value)
             );

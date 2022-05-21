@@ -12,14 +12,17 @@ namespace DynamicAppSettings.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IOptions<SmtpOptions> _smtpOptions;
+        private readonly IOptions<ApiOptions> _apiOptions;
 
         public HomeController(
             IConfiguration configuration,
-            IOptions<SmtpOptions> smtpOptions
+            IOptions<SmtpOptions> smtpOptions,
+            IOptions<ApiOptions> apiOptions
         )
         {
             _configuration = configuration;
             _smtpOptions = smtpOptions;   
+            _apiOptions = apiOptions;
         }
 
         public IActionResult Index(ConfigurationTypes type)
@@ -29,6 +32,7 @@ namespace DynamicAppSettings.Controllers
             {
                 ConfigurationTypes.IConfiguration   => _configuration.AsEnumerable(),
                 ConfigurationTypes.SmtpOptions      => _smtpOptions.AsEnumerable(),
+                ConfigurationTypes.ApiOptions       => _apiOptions.AsEnumerable(),
                 _                                   => null
             };
 
