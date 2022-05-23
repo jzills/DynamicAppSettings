@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using DynamicAppSettings.Configurations;
 using Microsoft.EntityFrameworkCore;
@@ -16,51 +18,64 @@ public class ApplicationDbContext : DbContext
     {
         modelBuilder
             .Entity<AppSetting>()
-            .HasData(new AppSetting[]
-            {
-                    new AppSetting
-                    {
-                        Id = 1,
-                        Key = "Smtp",
-                        Value = "{\"Host\": \"some@domain.com\",\"Port\": 25, \"EnableSSL\": true}",
-                        IsJsonValue = true
-                    },
-                    new AppSetting
-                    {
-                        Id = 2,
-                        Key = "Api:BaseUrl",
-                        Value = "www.someapi.com/api",
-                        IsJsonValue = false
-                    },
-                    new AppSetting
-                    {
-                        Id = 3,
-                        Key = "Api:Authentication:Key",
-                        Value = Guid.NewGuid().ToString(),
-                        IsJsonValue = false
-                    },
-                    new AppSetting
-                    {
-                        Id = 4,
-                        Key = "Api:Authentication:Secret",
-                        Value = Guid.NewGuid().ToString(),
-                        IsJsonValue = false
-                    },
-                    new AppSetting
-                    {
-                        Id = 5,
-                        Key = "ApiOther",
-                        Value = JsonSerializer.Serialize(new ApiOtherOptions
-                        {
-                            BaseUrl = "www.someotherapi.com/api",
-                            Authentication = new AuthenticationOptions
-                            {
-                                Key = Guid.NewGuid().ToString(),
-                                Secret = Guid.NewGuid().ToString()
-                            }
-                        }),
-                        IsJsonValue = true
-                    }
-            });
+            .HasData(GetAppSettings().Concat(GetAppSettingsWithJsonValue()));
     }
+
+    private List<AppSetting> GetAppSettings() =>
+        new List<AppSetting>
+        {
+            new AppSetting
+            {
+                Id = Guid.NewGuid(),
+                Key = "Api:BaseUrl",
+                Value = "www.someapi.com/api",
+                IsJsonValue = false
+            },
+            new AppSetting
+            {
+                Id = Guid.NewGuid(),
+                Key = "Api:Authentication:Key",
+                Value = Guid.NewGuid().ToString(),
+                IsJsonValue = false
+            },
+            new AppSetting
+            {
+                Id = Guid.NewGuid(),
+                Key = "Api:Authentication:Secret",
+                Value = Guid.NewGuid().ToString(),
+                IsJsonValue = false
+            }
+        };
+
+    private List<AppSetting> GetAppSettingsWithJsonValue() =>
+        new List<AppSetting>
+        {
+            new AppSetting
+            {
+                Id = Guid.NewGuid(),
+                Key = "Smtp",
+                Value = JsonSerializer.Serialize(new SmtpOptions
+                {
+                    Port = 3030,
+                    Host = "Some Host",
+                    EnableSSL = true
+                }),
+                IsJsonValue = true
+            },
+            new AppSetting
+            {
+                Id = Guid.NewGuid(),
+                Key = "ApiOther",
+                Value = JsonSerializer.Serialize(new ApiOtherOptions
+                {
+                    BaseUrl = "www.someotherapi.com/api",
+                    Authentication = new AuthenticationOptions
+                    {
+                        Key = Guid.NewGuid().ToString(),
+                        Secret = Guid.NewGuid().ToString()
+                    }
+                }),
+                IsJsonValue = true
+            }
+        };
 }
