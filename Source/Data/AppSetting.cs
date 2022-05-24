@@ -1,7 +1,8 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DynamicAppSettings.Data;
+
+#pragma warning disable CS8618
 
 public class AppSetting
 {

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace DynamicAppSettings.Extensions;
@@ -8,6 +6,8 @@ public static class StringExtensions
 {
     public static bool TryGetJsonObject(this string serializedJson, out Dictionary<string, object> deserializedJson)
     {
+        #pragma warning disable CS8625, CS8601
+
         deserializedJson = null;
         if (serializedJson.StartsWith("{") && serializedJson.EndsWith("}"))
         {
@@ -23,5 +23,7 @@ public static class StringExtensions
         }
         
         return false;
+
+        #pragma warning restore CS8625, CS8601
     }
 }

@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
-using DynamicAppSettings.Configurations;
 using Microsoft.EntityFrameworkCore;
+using DynamicAppSettings.Configurations;
 
 namespace DynamicAppSettings.Data;
+
+#pragma warning disable CS8618
 
 public class ApplicationDbContext : DbContext
 {

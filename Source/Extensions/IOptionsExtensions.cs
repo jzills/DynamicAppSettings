@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Extensions.Options;
 
 namespace DynamicAppSettings.Extensions;
@@ -12,6 +10,6 @@ public static class IOptionsExtensions
             .GetProperties()
             .Select(property => new KeyValuePair<string, string>(
                 property.Name,
-                property.GetValue(source).ToString()
+                property.GetValue(source)?.ToString() ?? string.Empty
             ));
 }
