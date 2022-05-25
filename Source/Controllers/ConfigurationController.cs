@@ -2,15 +2,16 @@
 using Microsoft.Extensions.Options;
 using DynamicAppSettings.Configurations;
 using DynamicAppSettings.Data;
+using DynamicAppSettings.Extensions;
 
 namespace DynamicAppSettings.Controllers;
 
 [Route("configuration")]
 public class ConfigurationController : Controller
 {
-    private readonly SmtpOptions _smtpOptions;
-    private readonly ApiOptions _apiOptions;
-    private readonly ApiOtherOptions _apiOtherOptions;
+    private readonly IOptions<SmtpOptions> _smtpOptions;
+    private readonly IOptions<ApiOptions> _apiOptions;
+    private readonly IOptions<ApiOtherOptions> _apiOtherOptions;
 
     // TODO: IOptionsSnapshot for reloading 
     public ConfigurationController(
@@ -19,9 +20,9 @@ public class ConfigurationController : Controller
         IOptions<ApiOtherOptions> apiOtherOptions
     )
     {
-        _smtpOptions = smtpOptions.Value;
-        _apiOptions = apiOptions.Value;
-        _apiOtherOptions = apiOtherOptions.Value;
+        _smtpOptions = smtpOptions;
+        _apiOptions = apiOptions;
+        _apiOtherOptions = apiOtherOptions;
     }
 
     [HttpGet]
@@ -29,9 +30,9 @@ public class ConfigurationController : Controller
     public IActionResult Get(ConfigurationTypes type = ConfigurationTypes.SmtpOptions) =>
         Ok(type switch
         {
-            ConfigurationTypes.SmtpOptions      => _smtpOptions,
-            ConfigurationTypes.ApiOptions       => _apiOptions,
-            ConfigurationTypes.ApiOtherOptions  => _apiOtherOptions,
+            ConfigurationTypes.SmtpOptions      => _smtpOptions.AsEnumerable(),
+            ConfigurationTypes.ApiOptions       => _apiOptions.AsEnumerable(),
+            ConfigurationTypes.ApiOtherOptions  => _apiOtherOptions.AsEnumerable(),
             _                                   => throw new NotSupportedException("Unsupported configuration type.")
         });
 
