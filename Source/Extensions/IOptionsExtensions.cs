@@ -1,44 +1,55 @@
-using System.Reflection;
 using Microsoft.Extensions.Options;
 
 namespace DynamicAppSettings.Extensions;
 
 public static class IOptionsExtensions
 {
-    public static IEnumerable<KeyValuePair<string, string>> AsEnumerable<T>(this IOptions<T> source) where T : class =>
-        source
-            .Value
-            .GetType()
-            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-            .Select(property => new KeyValuePair<string, string>(
-                property.Name,
-                property.GetValue(source.Value)?.ToString() ?? string.Empty
-            ));
+    public static IList<KeyValuePair<string, string>> ToScopeDictionary<T>(this IOptions<T> source) where T : class
+    {
+        var result = new Dictionary<string, string>();
+        var typeName = source.Value.GetType().Name;
+        source.Value.ToScopeDictionary(typeName, result);
+        return result.ToList();
+    }
 
-    public static void ToScopeDictionary<T>(T source, string scope, Dictionary<string, string> dictionary)
+    private static void ToScopeDictionary<T>(this T source, string scope, Dictionary<string, string> dictionary)
 	{
-		var properties = source.GetType().GetProperties();
-
-        foreach (var property in properties)
+		var properties = source?.GetType()?.GetProperties();
+        if (properties != null)
         {
-            var formattedScope = FormatScope(scope, property.Name);
-            if (property.PropertyType == typeof(string))
-                dictionary.Add(
-                    formattedScope, 
-                    property.GetValue(source)?.ToString() ?? string.Empty
-                );
-			else if (property.PropertyType.IsArrayOrEnumerable())
-			{
-				//TODO: Handle array types
-			}
-			else if (property.PropertyType.BaseType == typeof(object))
-                ToScopeDictionary(
-                    property.GetValue(source), 
-                    formattedScope, 
-                    dictionary
-                );
+            foreach (var property in properties)
+            {
+                var formattedScope = FormatScope(scope, property.Name);
+                if (property.PropertyType == typeof(string))
+                    dictionary.Add(
+                        formattedScope, 
+                        property.GetValueString(source)
+                    );
+                else if (property.PropertyType.IsArrayOrEnumerable())
+                {
+                    var arrayValue = (Array?) property.GetValue(source);
+                    if (arrayValue != null)
+                    {
+                        dictionary.Add(
+                            formattedScope,
+                            arrayValue.GetElementsAsString()
+                        );
+                    }
+                }
+                else if (property.PropertyType.BaseType == typeof(object))
+                    ToScopeDictionary(
+                        property.GetValue(source), 
+                        formattedScope, 
+                        dictionary
+                    );
+                else
+                    dictionary.Add(
+                        formattedScope, 
+                        property.GetValueString(source)
+                    );
+            }
         }
-
+        
         string FormatScope(params string[] scopes) => string.Join(":", scopes);
 	}
 }

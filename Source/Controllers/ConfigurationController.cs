@@ -30,9 +30,9 @@ public class ConfigurationController : Controller
     public IActionResult Get(ConfigurationTypes type = ConfigurationTypes.SmtpOptions) =>
         Ok(type switch
         {
-            ConfigurationTypes.SmtpOptions      => _smtpOptions.AsEnumerable(),
-            ConfigurationTypes.ApiOptions       => _apiOptions.AsEnumerable(),
-            ConfigurationTypes.ApiOtherOptions  => _apiOtherOptions.AsEnumerable(),
+            ConfigurationTypes.SmtpOptions      => _smtpOptions.ToScopeDictionary(),
+            ConfigurationTypes.ApiOptions       => _apiOptions.ToScopeDictionary(),
+            ConfigurationTypes.ApiOtherOptions  => _apiOtherOptions.ToScopeDictionary(),
             _                                   => throw new NotSupportedException("Unsupported configuration type.")
         });
 
