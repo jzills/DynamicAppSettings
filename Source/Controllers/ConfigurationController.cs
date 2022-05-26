@@ -52,11 +52,6 @@ public class ConfigurationController : Controller
         },
         new 
         {
-            Id = ConfigurationTypes.IConfiguration,
-            Name = nameof(ConfigurationTypes.IConfiguration)
-        },
-        new 
-        {
             Id = ConfigurationTypes.SmtpOptions,
             Name = nameof(ConfigurationTypes.SmtpOptions)
         }

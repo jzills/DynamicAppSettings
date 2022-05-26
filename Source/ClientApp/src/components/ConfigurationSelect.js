@@ -1,34 +1,21 @@
-import { Select, FormControl, MenuItem, InputLabel } from '@mui/material';
-import { useState, useEffect } from 'react';
-import useConfigurationTypes from "../hooks/useConfigurationTypes"
+import { Select, FormControl, MenuItem, InputLabel } from '@mui/material'
 
-const ConfigurationSelect = ({handleChange}) => {
-    const [configurationType, setConfigurationType] = useState({id: -1})
-    const [configurationTypes] = useConfigurationTypes()
-
-    useEffect(() => 
-        setConfigurationType({...configurationTypes[0]}), 
-    [configurationTypes])
-   
+const ConfigurationSelect = ({data, selected, label, handleChange}) => {
     return (
         <FormControl fullWidth>
-            <InputLabel id="configuration-type-label">Configuration Type</InputLabel>
+            <InputLabel id="configuration-type-label">{label}</InputLabel>
             <Select
                 labelId="configuration-type-label"
                 id="configuration-type-select"
-                value={configurationType.id}
-                label="Configuration Type"
+                value={selected.id}
+                label={label}
                 onChange={handleChange}
             >
                 {
-                    configurationTypes.map(configurationType =>
-                        <MenuItem 
-                            key={configurationType.id} 
-                            value={configurationType.id}
-                        >
+                    data.map(configurationType =>
+                        <MenuItem key={configurationType.id} value={configurationType.id}>
                             {configurationType.name}
-                        </MenuItem>
-                    )
+                        </MenuItem>)
                 }
             </Select>
         </FormControl>
