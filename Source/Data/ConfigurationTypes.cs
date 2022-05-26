@@ -2,7 +2,7 @@ namespace DynamicAppSettings.Data;
 
 public enum ConfigurationTypes
 {
-    ApiOptions,
+    ApiOptions = 1,
     ApiOtherOptions,
     SmtpOptions
 }

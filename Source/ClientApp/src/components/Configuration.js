@@ -7,12 +7,8 @@ import ConfigurationCard from "./ConfigurationCard"
 
 const Configuration = () => {
     const [configuration, getConfiguration] = useConfiguration()
-	const [configurationType, setConfigurationType] = useState({id: -1})
+	const [configurationType, setConfigurationType] = useState({id: 0})
     const [configurationTypes] = useConfigurationTypes()
-
-	useEffect(() => 
-        setConfigurationType({...configurationTypes[0]}), 
-    [configurationTypes])
 
 	const handleChange = async event => {
 		const { value } = event.target;
@@ -22,19 +18,20 @@ const Configuration = () => {
 
 	return (
 		<React.Fragment>
-			<div style={{display: "flex"}}>
-				<div style={{padding: "2.5%", width: "100%"}}>
-					<ConfigurationCard 
-						data={configurationTypes} 
-						selected={configurationType}
-						label="Configuration Type"
-						handleChange={handleChange}
-					/>
-				</div>
-				<div style={{padding: "2.5%", width: "100%"}}>
-					<ConfigurationTable data={configuration}></ConfigurationTable>
-				</div>
+			<div style={{padding: "2%", paddingBottom: "0", width: "100%"}}>
+				<ConfigurationCard 
+					data={configurationTypes} 
+					selected={configurationType}
+					label="Configuration Type"
+					handleChange={handleChange}
+				/>
 			</div>
+			{
+				!!configurationType.id && 
+					<div style={{padding: "2%", width: "100%"}}>
+						<ConfigurationTable data={configuration}></ConfigurationTable>
+					</div>
+			}
 		</React.Fragment>
 	)
 }

@@ -3,15 +3,16 @@ import { Select, FormControl, MenuItem, InputLabel } from '@mui/material'
 const ConfigurationSelect = ({data, selected, label, handleChange}) => {
     return (
         <FormControl fullWidth>
-            <InputLabel id="configuration-type-label">{label}</InputLabel>
+            <InputLabel>{label}</InputLabel>
             <Select
-                labelId="configuration-type-label"
-                id="configuration-type-select"
                 value={selected.id}
                 label={label}
                 onChange={handleChange}
             >
-                {
+                <MenuItem value={0}>
+                    None
+                </MenuItem>
+                { 
                     data.map(configurationType =>
                         <MenuItem key={configurationType.id} value={configurationType.id}>
                             {configurationType.name}
