@@ -1,4 +1,4 @@
-import { Select, FormControl, MenuItem, InputLabel } from '@mui/material'
+import { Select, FormControl, MenuItem, InputLabel } from "@mui/material"
 
 const ConfigurationSelect = ({data, selected, label, handleChange}) => {
     return (
@@ -8,6 +8,9 @@ const ConfigurationSelect = ({data, selected, label, handleChange}) => {
                 value={selected.id}
                 label={label}
                 onChange={handleChange}
+                MenuProps={{
+                    style: {zIndex: 35001}
+                }}
             >
                 <MenuItem value={0}>
                     None

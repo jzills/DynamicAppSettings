@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react"
-import ConfigurationSelect from "./ConfigurationSelect"
+import React, { useState } from "react"
 import ConfigurationTable from "./ConfigurationTable"
 import useConfiguration from "../hooks/useConfiguration"
 import useConfigurationTypes from "../hooks/useConfigurationTypes"

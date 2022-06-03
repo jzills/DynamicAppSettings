@@ -9,20 +9,23 @@ namespace DynamicAppSettings.Controllers;
 [Route("configuration")]
 public class ConfigurationController : Controller
 {
-    private readonly IOptions<SmtpOptions> _smtpOptions;
     private readonly IOptions<ApiOptions> _apiOptions;
     private readonly IOptions<ApiOtherOptions> _apiOtherOptions;
+    private readonly IOptions<AuthenticationOptions> _authenticationOptions;
+    private readonly IOptions<SmtpOptions> _smtpOptions;
 
     // TODO: IOptionsSnapshot for reloading 
     public ConfigurationController(
-        IOptions<SmtpOptions> smtpOptions,
         IOptions<ApiOptions> apiOptions,
-        IOptions<ApiOtherOptions> apiOtherOptions
+        IOptions<ApiOtherOptions> apiOtherOptions,
+        IOptions<AuthenticationOptions> authenticationOptions,
+        IOptions<SmtpOptions> smtpOptions
     )
     {
-        _smtpOptions = smtpOptions;
         _apiOptions = apiOptions;
         _apiOtherOptions = apiOtherOptions;
+        _authenticationOptions = authenticationOptions;
+        _smtpOptions = smtpOptions;
     }
 
     [HttpGet]
@@ -30,10 +33,11 @@ public class ConfigurationController : Controller
     public IActionResult Get(ConfigurationTypes type = ConfigurationTypes.SmtpOptions) =>
         Ok(type switch
         {
-            ConfigurationTypes.SmtpOptions      => _smtpOptions.ToScopeDictionary(),
-            ConfigurationTypes.ApiOptions       => _apiOptions.ToScopeDictionary(),
-            ConfigurationTypes.ApiOtherOptions  => _apiOtherOptions.ToScopeDictionary(),
-            _                                   => throw new NotSupportedException("Unsupported configuration type.")
+            ConfigurationTypes.SmtpOptions              => _smtpOptions.ToScopeDictionary(),
+            ConfigurationTypes.ApiOptions               => _apiOptions.ToScopeDictionary(),
+            ConfigurationTypes.ApiOtherOptions          => _apiOtherOptions.ToScopeDictionary(),
+            ConfigurationTypes.AuthenticationOptions    => _authenticationOptions.ToScopeDictionary(),
+            _                                           => throw new NotSupportedException("Unsupported configuration type.")
         });
 
     [HttpGet]
@@ -49,6 +53,11 @@ public class ConfigurationController : Controller
         {
             Id = ConfigurationTypes.ApiOtherOptions,
             Name = nameof(ConfigurationTypes.ApiOtherOptions)
+        },
+        new 
+        {
+            Id = ConfigurationTypes.AuthenticationOptions,
+            Name = nameof(ConfigurationTypes.AuthenticationOptions)
         },
         new 
         {

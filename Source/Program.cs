@@ -12,9 +12,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
 });
 
 builder.Services.AddOptions();
-builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
-builder.Services.Configure<ApiOptions>(builder.Configuration.GetSection("Api"));
-builder.Services.Configure<ApiOtherOptions>(builder.Configuration.GetSection("ApiOther"));
+builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection(nameof(SmtpOptions)));
+builder.Services.Configure<ApiOptions>(builder.Configuration.GetSection(nameof(ApiOptions)));
+builder.Services.Configure<ApiOtherOptions>(builder.Configuration.GetSection(nameof(ApiOtherOptions)));
+builder.Services.Configure<AuthenticationOptions>(builder.Configuration.GetSection(nameof(AuthenticationOptions)));
 
 builder.Services.AddControllersWithViews();
 

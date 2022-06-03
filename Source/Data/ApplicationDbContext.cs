@@ -26,21 +26,21 @@ public class ApplicationDbContext : DbContext
             new AppSetting
             {
                 Id = Guid.NewGuid(),
-                Key = "Api:BaseUrl",
+                Key = "ApiOptions:BaseUrl",
                 Value = "www.someapi.com/api",
                 IsJsonValue = false
             },
             new AppSetting
             {
                 Id = Guid.NewGuid(),
-                Key = "Api:Authentication:Key",
+                Key = "ApiOptions:Authentication:Key",
                 Value = Guid.NewGuid().ToString(),
                 IsJsonValue = false
             },
             new AppSetting
             {
                 Id = Guid.NewGuid(),
-                Key = "Api:Authentication:Secret",
+                Key = "ApiOptions:Authentication:Secret",
                 Value = Guid.NewGuid().ToString(),
                 IsJsonValue = false
             }
@@ -52,7 +52,7 @@ public class ApplicationDbContext : DbContext
             new AppSetting
             {
                 Id = Guid.NewGuid(),
-                Key = "Smtp",
+                Key = "SmtpOptions",
                 Value = JsonSerializer.Serialize(new SmtpOptions
                 {
                     Port = 3030,
@@ -64,7 +64,7 @@ public class ApplicationDbContext : DbContext
             new AppSetting
             {
                 Id = Guid.NewGuid(),
-                Key = "ApiOther",
+                Key = "ApiOtherOptions",
                 Value = JsonSerializer.Serialize(new ApiOtherOptions
                 {
                     BaseUrl = "www.someotherapi.com/api",
