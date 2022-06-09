@@ -43,6 +43,20 @@ public class ApplicationDbContext : DbContext
                 Key = "ApiOptions:Authentication:Secret",
                 Value = Guid.NewGuid().ToString(),
                 IsJsonValue = false
+            },
+            new AppSetting
+            {
+                Id = Guid.NewGuid(),
+                Key = "AuthenticationOptions:Key",
+                Value = Guid.NewGuid().ToString(),
+                IsJsonValue = false
+            },
+            new AppSetting
+            {
+                Id = Guid.NewGuid(),
+                Key = "AuthenticationOptions:Secret",
+                Value = Guid.NewGuid().ToString(),
+                IsJsonValue = false
             }
         };
 
