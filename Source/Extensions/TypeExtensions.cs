@@ -1,5 +1,3 @@
-using System.Reflection;
-
 namespace DynamicAppSettings.Extensions;
 
 public static class TypeExtensions

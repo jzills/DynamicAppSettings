@@ -1,5 +1,4 @@
 using DynamicAppSettings.Configurations;
-using Microsoft.Extensions.Configuration;
 
 namespace DynamicAppSettings.Extensions;
 

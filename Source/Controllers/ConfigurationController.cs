@@ -14,7 +14,6 @@ public class ConfigurationController : Controller
     private readonly IOptions<AuthenticationOptions> _authenticationOptions;
     private readonly IOptions<SmtpOptions> _smtpOptions;
 
-    // TODO: IOptionsSnapshot for reloading 
     public ConfigurationController(
         IOptions<ApiOptions> apiOptions,
         IOptions<ApiOtherOptions> apiOtherOptions,
