@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Configuration;
-
 namespace DynamicAppSettings.Configurations;
 
 public class ApplicationConfigurationSource : IConfigurationSource

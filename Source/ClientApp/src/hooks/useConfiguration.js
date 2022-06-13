@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { getConfiguration } from "../utilities/configuration"
+import { getConfiguration } from "../scripts/configuration"
 
 const useConfiguration = defaultConfigType => {
     const [configuration, setConfiguration] = useState([])

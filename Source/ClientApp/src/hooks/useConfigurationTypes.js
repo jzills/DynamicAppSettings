@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getConfigurationTypes } from "../utilities/configuration"
+import { getConfigurationTypes } from "../scripts/configuration"
 
 const useConfigurationTypes = () => {
     const [configurationTypes, setConfigurationTypes] = useState([])

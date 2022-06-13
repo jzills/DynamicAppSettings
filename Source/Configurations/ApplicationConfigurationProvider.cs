@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using DynamicAppSettings.Data;
 using DynamicAppSettings.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace DynamicAppSettings.Configurations;
 

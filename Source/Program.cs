@@ -5,6 +5,8 @@ using DynamicAppSettings.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add application configuration from 
+// database to appsettings.json
 builder.Configuration.AddApplicationConfiguration();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => {
