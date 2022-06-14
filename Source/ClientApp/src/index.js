@@ -11,4 +11,5 @@ ReactDOM.render(
 	<BrowserRouter basename={baseUrl}>
 		<App />
 	</BrowserRouter>,
-	rootElement);
+	rootElement
+);
