@@ -22,36 +22,23 @@ public static class IOptionsExtensions
                 var formattedScope = FormatScope(scope, property.Name);
                 if (property.PropertyType == typeof(string))
                 {
-                    dictionary.Add(
-                        formattedScope, 
-                        property.GetValueString(source)
-                    );
+                    dictionary.Add(formattedScope, property.GetValueString(source));
                 }
                 else if (property.PropertyType.IsArrayOrEnumerable())
                 {
                     var arrayValue = (Array?) property.GetValue(source);
                     if (arrayValue != null)
                     {
-                        dictionary.Add(
-                            formattedScope,
-                            arrayValue.GetElementsAsString()
-                        );
+                        dictionary.Add(formattedScope, arrayValue.GetElementsAsString());
                     }
                 }
                 else if (property.PropertyType.BaseType == typeof(object))
                 {
-                    ToScopeDictionary(
-                        property.GetValue(source), 
-                        formattedScope, 
-                        dictionary
-                    );
+                    ToScopeDictionary(property.GetValue(source), formattedScope, dictionary);
                 }
                 else
                 {
-                    dictionary.Add(
-                        formattedScope, 
-                        property.GetValueString(source)
-                    );
+                    dictionary.Add(formattedScope, property.GetValueString(source));
                 }
             }
         }

@@ -1,6 +1,6 @@
 import React from "react"
 import Header from "./components/Header"
-import Configuration from "./components/Configuration";
+import Configuration from "./components/Configuration"
 
 const App = () => {
 	return (
@@ -11,4 +11,4 @@ const App = () => {
 	)
 }
 
-export default App;
+export default App
