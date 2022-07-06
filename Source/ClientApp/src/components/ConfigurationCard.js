@@ -8,7 +8,7 @@ const ConfigurationCard = ({data, selected, label, handleChange}) => {
 	return (
 		<Card>
 			<CardContent style={{padding: "2%"}}>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				These configurations were created during startup using a custom configuration provider called ApplicationConfigurationProvider which fetches configurations from a database. This class can be found under the Configurations directory. After the ApplicationConfigurationProvider populates IConfiguration with our custom configurations, we can then use the IOptions pattern to bind our dynamic app settings to our option models. These can then be fetched through normal dependency injection means like constructor injection.
 			</CardContent>
 			<CardActions style={{padding: "2%"}}>
                 <ConfigurationSelect 
