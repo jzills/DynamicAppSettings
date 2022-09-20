@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace DynamicAppSettings.Extensions;
+namespace Source.Extensions;
 
 public static class PropertyInfoExtensions
 {

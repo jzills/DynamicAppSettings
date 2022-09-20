@@ -1,8 +1,8 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
-using DynamicAppSettings.Configurations;
+using Source.Configurations;
 
-namespace DynamicAppSettings.Data;
+namespace Source.Data;
 
 #pragma warning disable CS8618
 

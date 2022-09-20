@@ -1,9 +1,9 @@
 using System.Text.Json;
-using DynamicAppSettings.Data;
-using DynamicAppSettings.Extensions;
+using Source.Data;
+using Source.Extensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace DynamicAppSettings.Configurations;
+namespace Source.Configurations;
 
 public class ApplicationConfigurationProvider : ConfigurationProvider
 {

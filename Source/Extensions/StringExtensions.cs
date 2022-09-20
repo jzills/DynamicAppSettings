@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace DynamicAppSettings.Extensions;
+namespace Source.Extensions;
 
 public static class StringExtensions
 {

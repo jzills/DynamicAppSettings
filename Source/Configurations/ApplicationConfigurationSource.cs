@@ -1,4 +1,4 @@
-namespace DynamicAppSettings.Configurations;
+namespace Source.Configurations;
 
 public class ApplicationConfigurationSource : IConfigurationSource
 {

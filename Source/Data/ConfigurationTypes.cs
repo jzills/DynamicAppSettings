@@ -1,4 +1,4 @@
-namespace DynamicAppSettings.Data;
+namespace Source.Data;
 
 public enum ConfigurationTypes
 {

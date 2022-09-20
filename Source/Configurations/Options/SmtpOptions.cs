@@ -1,4 +1,4 @@
-namespace DynamicAppSettings.Configurations;
+namespace Source.Configurations;
 
 #pragma warning disable CS8618
 

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using DynamicAppSettings.Configurations;
-using DynamicAppSettings.Data;
-using DynamicAppSettings.Extensions;
+using Source.Configurations;
+using Source.Data;
+using Source.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

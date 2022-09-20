@@ -1,6 +1,6 @@
-using DynamicAppSettings.Configurations;
+using Source.Configurations;
 
-namespace DynamicAppSettings.Extensions;
+namespace Source.Extensions;
 
 public static class IConfigurationBuilderExtensions
 {

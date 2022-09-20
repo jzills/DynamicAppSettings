@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Options;
 
-namespace DynamicAppSettings.Extensions;
+namespace Source.Extensions;
 
 public static class IOptionsExtensions
 {

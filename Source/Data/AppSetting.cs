@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace DynamicAppSettings.Data;
+namespace Source.Data;
 
 #pragma warning disable CS8618
 

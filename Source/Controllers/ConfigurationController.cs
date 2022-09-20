@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using DynamicAppSettings.Configurations;
-using DynamicAppSettings.Data;
-using DynamicAppSettings.Extensions;
+using Source.Configurations;
+using Source.Data;
+using Source.Extensions;
 
-namespace DynamicAppSettings.Controllers;
+namespace Source.Controllers;
 
 [Route("configuration")]
 public class ConfigurationController : Controller
