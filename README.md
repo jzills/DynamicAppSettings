@@ -44,6 +44,8 @@ new AppSetting
 ## ClientApp
 The [ClientApp](Source/ClientApp) includes a small runnable example. Use the command ```dotnet run``` within the [Source](Source) folder.
 
+![DynamicAppSettings_1](https://user-images.githubusercontent.com/42525520/191156168-8b4a55d0-a098-4f26-971a-44ea41744a43.png)
+
 ## More information from Microsoft
 [Custom Configuration Provider](https://docs.microsoft.com/en-us/dotnet/core/extensions/custom-configuration-provider)
 
